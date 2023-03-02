@@ -1,0 +1,83 @@
+-- Database: library
+
+-- DROP DATABASE IF EXISTS library;
+
+CREATE DATABASE library
+    WITH
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'English_United States.1252'
+    LC_CTYPE = 'English_United States.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1
+    IS_TEMPLATE = False;
+
+User table:
+
+-- Table: public.users
+
+-- DROP TABLE IF EXISTS public.users;
+
+CREATE TABLE IF NOT EXISTS public.users
+(
+    user_id int4range NOT NULL,
+    user_name character varying(50) COLLATE pg_catalog."default",
+    user_type character varying(50) COLLATE pg_catalog."default",
+    password character varying(50) COLLATE pg_catalog."default",
+    CONSTRAINT users_pkey PRIMARY KEY (user_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.users
+    OWNER to postgres;
+
+Books table:
+
+-- Table: public.books
+
+-- DROP TABLE IF EXISTS public.books;
+
+CREATE TABLE IF NOT EXISTS public.books
+(
+    book_id text COLLATE pg_catalog."default" NOT NULL,
+    book_name character(50) COLLATE pg_catalog."default",
+    book_auther character(50) COLLATE pg_catalog."default",
+    no_of_column integer,
+    CONSTRAINT books_pkey PRIMARY KEY (book_id)
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.books
+    OWNER to postgres;
+
+Borrowed table:
+
+-- Table: public.borrowed
+
+-- DROP TABLE IF EXISTS public.borrowed;
+
+CREATE TABLE IF NOT EXISTS public.borrowed
+(
+    user_id int4range,
+    book_id text COLLATE pg_catalog."default",
+    issue_date date,
+    due_date date,
+    id integer NOT NULL,
+    CONSTRAINT borrowed_pkey PRIMARY KEY (id),
+    CONSTRAINT book__id FOREIGN KEY (book_id)
+        REFERENCES public.books (book_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+        NOT VALID,
+    CONSTRAINT user__id FOREIGN KEY (user_id)
+        REFERENCES public.users (user_id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public.borrowed
+    OWNER to postgres;
