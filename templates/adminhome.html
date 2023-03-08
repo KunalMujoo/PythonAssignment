@@ -1,0 +1,69 @@
+Admin Home
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8">
+  <title>{% block title %}{% endblock %}</title>
+ </head>
+ <body class="loggedin">
+ 
+   
+ <div class="container-fluid">
+      <div class="row">
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+          <div class="sidebar-sticky">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#">
+                  <i class="fas fa-home"></i>
+                  <button onclick="addbooks()">Add</button>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-shopping-cart"></i>
+                  <button onclick="viewbooks()">View</button>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+    <i class="fas fa-shopping-cart"></i>
+                  <button onclick="deletebooks()">Delete</button>
+                </a>
+              </li>
+            </ul>
+   </div>
+        </nav>
+  
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+            <div class="col-12">
+   {% block content %}{% endblock %}
+   </div>
+          </div>
+   </main>
+     
+      </div>
+    </div>
+   
+    <script>
+      function addbooks() {
+        var apiUrl = '/addbooks';
+        fetch(apiUrl).then(response => {
+        return response.json();
+        }).then(data => {
+        console.log(data);
+      }).catch(err => {
+      console.log(err);
+    });
+        document.getElementById("demo").innerHTML = "Hello World";
+      }
+      function viewbooks() {
+        document.getElementById("demo").innerHTML = "Hello World";
+      }
+      function deletebooks() {
+        document.getElementById("demo").innerHTML = "Hello World";
+      }
+      </script>
+ </body>
+</html>
