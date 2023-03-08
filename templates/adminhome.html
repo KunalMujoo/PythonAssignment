@@ -10,30 +10,52 @@ Admin Home
    
  <div class="container-fluid">
       <div class="row">
-        <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+        
           <div class="sidebar-sticky">
+            
+            
             <ul class="nav flex-column">
+              Add Book
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                
                   <i class="fas fa-home"></i>
-                  <button onclick="addbooks()">Add</button>
-                </a>
+                  
+                  <form class="form-group" action="/addbooks" method="post">
+                    <label>Book name</label>
+                    <input type="text" class="form-control" name="bookname" placeholder="Book name" id="bookname" required>
+                    <label>Author name</label>
+                    <input type="text" class="form-control" name="authorname" placeholder="Author name" id="authorname" required>
+                    <label>Number of Copies</label>
+                    <input type="text" class="form-control" name="numberofcopies" placeholder="Number of Copies" id="numberofcopies" required>
+                    <input type="submit" value="Add" class="form-control btn btn-success " name="">
+                </form>
+                
               </li>
+              Delete Book
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                
                   <i class="fas fa-shopping-cart"></i>
-                  <button onclick="viewbooks()">View</button>
-                </a>
+                  
+                  <form class="form-group" action="/deletebooks" method="delete">
+                    <label>Book name</label>
+                    <input type="text" class="form-control" name="bookname" placeholder="Book name" id="bookname" required>
+                     
+                    <input type="submit" value="Delete" class="form-control btn btn-success " name="">
+                </form>
+                
               </li>
+            
               <li class="nav-item">
-                <a class="nav-link" href="#">
-    <i class="fas fa-shopping-cart"></i>
-                  <button onclick="deletebooks()">Delete</button>
-                </a>
+                
+                  <i class="fas fa-shopping-cart"></i>
+
+                  <button onclick="listbooks()">List Books</button>
+                  <p id="listofbooks"></p>
+                
               </li>
             </ul>
    </div>
-        </nav>
+        
   
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
@@ -47,23 +69,17 @@ Admin Home
     </div>
    
     <script>
-      function addbooks() {
-        var apiUrl = '/addbooks';
-        fetch(apiUrl).then(response => {
-        return response.json();
-        }).then(data => {
-        console.log(data);
-      }).catch(err => {
-      console.log(err);
-    });
-        document.getElementById("demo").innerHTML = "Hello World";
+        const listbooks = async () => {
+        const response = await fetch('http://localhost:5000/viewbooks');
+        var temp = JSON.parse(myJson);
+        var div = document.createElement('div');
+        div.innerHTML = temp.bookname + '<br />' + temp.author + '<br />' + temp.numberofcopies;
+        document.body.appendChild(div);
+        
       }
-      function viewbooks() {
-        document.getElementById("demo").innerHTML = "Hello World";
-      }
-      function deletebooks() {
-        document.getElementById("demo").innerHTML = "Hello World";
-      }
-      </script>
+
+        
+        
+    </script>
  </body>
 </html>
